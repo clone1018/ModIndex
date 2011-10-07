@@ -1,0 +1,349 @@
+@import url('http://localhost/common/css');
+@import url('http://common.simplaza.net/css');
+
+/* 	=====================
+	GLOBAL ELEMENT STYLES
+	=====================
+*/
+
+body, html {
+	margin: 0px;
+	padding: 0px;
+}
+
+h1,h2,h3,h4,h5,h6,p {
+	margin: 0px;
+	padding: 0px;
+}
+
+a {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+header {
+	height: 52px;
+	padding: 10px;
+}
+
+input[type="checkbox"] {
+	margin: 0px;
+	padding: 0px;
+}
+
+input[type=text], textarea {
+	margin: 2px 0px;
+}
+
+textarea {
+	resize: none;
+	height: 150px;
+}
+
+/* 	==========
+	MAIN PARTS
+	==========
+*/
+
+.root {
+	min-width: 800px;
+	max-width: 920px;
+	
+	margin: 0 auto;
+}
+
+.reloading {
+	opacity: 0.5;
+	height: 100px;
+	overflow: hidden;
+}
+
+.dialog {
+	background: #fff no-repeat bottom;
+	color: #000;
+	border-radius: 10px;
+	font-size: large;
+	padding: 5px 10px 23px 10px;
+	cursor: pointer;
+}
+	
+	.dialog + img {
+		position: relative;
+		top: -3px;
+		left: 40px;
+	}
+
+.tooltip {
+	position: absolute;
+	padding: 10px;
+	width: 256px;
+	border-radius: 0px 0px 5px 5px;
+}
+
+	.tooltip ul {
+		margin: 0px;
+		margin-top: 5px;
+		padding-left: 25px;
+	}
+	
+	.tooltip p {
+		margin: 5px;
+	}
+	
+.codebox {
+	width: 100%;
+	height: 150px;
+	padding: 5px;
+	resize: none;
+}
+
+.rev {
+	position: absolute;
+	font-family: monospace;
+	font-size: 12px;
+	width: 400px;
+	color: #fff;
+}
+/* 	=======
+	WINDOWS
+	=======
+*/
+
+.windowroot {
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	top: 0px;
+	z-index: 1000;
+}
+
+.window {
+	margin: 0 auto;
+	min-width: 800px;
+	max-width: 920px;
+}
+	
+	.window > h2 {
+		padding: 10px 0 0 0;
+		margin: 0 25px;
+	}
+	
+	.window h3 {
+		padding: 10px 0 0 0;
+		margin: 0 35px;
+	}
+		
+	.window .canvas {
+		margin: 10px 45px 0px 45px;
+	}
+	
+		.window .canvas p {
+				font-size: 10px;
+		}
+		
+		.window .canvas > p {
+				margin-bottom: 10px;
+		}
+		
+		.window .canvas .option {
+			clear: both;
+			margin-bottom: 10px;
+		}
+			.window .canvas .option > p {
+				margin-top: 5px;
+			}
+			
+			.window .canvas .option h4 {
+				display: inline;
+			}
+
+			.window .canvas .option.ctrl_checkbox {
+				cursor: pointer;
+			}
+			
+			.window .canvas .option.ctrl_button {
+				display: inline-block;
+				margin-right: 10px;
+			}
+			
+			.window .canvas .option input[type=checkbox] {
+				margin: 4px 15px 0px 0px;
+			}
+			
+			.window .canvas .option select {
+				width: 60%;
+			}
+				
+		
+		.window .canvas .metadata {
+			display: inline-block;
+		}
+		
+			.window .canvas .metadata h4 {
+				margin-bottom: 10px;
+			}
+		
+			.window .canvas .metadata p {
+				font-size: 12px;
+				line-height: 25px;
+			}
+	
+	.window footer {
+		float: right;
+		margin: 15px 45px;
+		
+		background: #a00;
+		
+		font-size: 8px;
+		letter-spacing: 2px;
+		color: #300 ;
+		text-align: center;
+		text-shadow: 0px 2px 0px #c00;
+		
+		border-top: 2px solid #d00;
+	}
+	
+		.window footer p {
+			margin: 7px;
+			padding: 5px;
+			font-weight: bold;
+			border: 1px dashed #fa2;
+		}
+/* 	========
+	TOOLBARS
+	========
+*/
+
+.toolbar .button {
+	padding: 0px 10px;
+}	
+	
+.toolbar_window {
+	margin: 0 25px;
+	padding: 10px 0;
+	float: right;
+}
+
+#toolbar_sort {
+	height: 20px;
+	padding: 5px 10px;
+}
+
+#toolbar_limits {
+	padding: 20px 0px;
+}
+
+#searchform {
+	float: right;
+}
+
+	#searchform input {
+		padding: 5px;
+		margin: 0px;
+		height: 20px;
+		width: 200px;
+	}
+	
+	#searchform input[type='submit'] {
+		position: absolute;
+		top: -100px;
+		left: 0px;
+	}
+	
+/* 	===========
+	ROW CLASSES
+	===========
+*/
+
+.heading {
+	margin-top: 5px;
+	padding: 2px 23px;
+}
+
+.mod {
+	clear: both;
+	height: 38px;
+	
+	margin-top: 5px;
+	padding-right: 10px;
+}
+
+	.mod .button_extend {
+		width: 13px;
+		height: 100%;
+		float: left;
+		
+		margin-right: 10px;
+		line-height: 33px;
+		
+		cursor: pointer;
+	}
+		
+		.mod .button_extend:hover {
+			background-color: #fff !important;
+		}
+
+	.mod .link_mod {
+		display: block;
+		
+		padding: 2px 0px;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	
+	.mod .meta {
+		text-align: right;
+		padding: 2px 0px;
+		float: right;
+	}
+	
+	.mod .flag, .canvas_flags h4 {
+		display: inline-block;
+		margin-top: 2px;
+		padding: 1px 2px;
+		cursor: default;
+	}
+	
+.emptylisting {
+	text-align: center;
+	padding: 10px;
+	line-height: 50px;
+	letter-spacing: 2px;
+}
+
+.limitedlisting {
+	text-align: center;
+	margin-top: 5px;
+	padding: 10px;
+}
+
+/* 	=================
+	LISTING MODIFIERS
+	=================
+*/
+
+.listing_mini .mod {
+	height: 26px;
+}
+	.listing_mini .mod > .button_extend {
+		font-size: 15px;
+		line-height: 25px;
+	}
+	
+	.listing_mini .mod > .tools {
+		font-size: 20px;
+		line-height: 25px;
+	}
+/* 	===================
+	TOOL DRAWER CLASSES
+	===================
+*/
+
+.tools {
+	float: left;
+	height: 100%;
+	padding: 0 2px;
+	line-height: 38px;
+}
+
+	

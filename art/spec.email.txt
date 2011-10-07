@@ -1,0 +1,5 @@
+Email Database Specification:
+
+	Array: (Email, ID) of watching topic versions
+	Array: (Email, ID) of watching topic names
+	Array: Emails awaiting confirmation

@@ -1,0 +1,225 @@
+/* 	===================
+	MINECRAFT MOD INDEX
+	CREAMER
+	
+	v1.0
+	===================
+*/
+
+body {
+	background: #FFFAD5;
+	color: #fff;	
+	font-family: sans-serif;
+}
+
+a {
+	color: #403F35;
+}
+
+	a:hover {
+		color: #FFFAD5;
+	}
+	
+	a.button_confirm {
+		color: #f00;
+	}
+	
+	a#button_save, a#button_editor_submit {
+		color: #0f0;
+	}
+	
+header {
+	background-color: #BFBBA0;
+	text-shadow: 0px 1px 0px #7F7E6A;
+}
+
+input, textarea {
+	font-size: 14px;
+	font-family: sans-serif;
+	font-weight: bold;
+	background-color: #fff;
+	border: none;
+	border-top: 1px solid #444;
+	border-bottom: 1px solid #444;
+	color: #000;
+}
+
+.tooltip {
+	font-size: 12px;
+}
+
+.codebox {
+	font-family: monospace;
+	font-size: 10px;
+	border: 1px dashed #ddd;
+}
+
+.window {
+	background-color: rgb(127, 125, 106);
+	background-color: rgba(127, 125, 106, 0.95);
+	border-bottom: 15px solid #3F3E35;
+}
+
+	.window h2, .window h3, .window h4 {
+			text-shadow: 0px 1px 0px #7F7E6A;
+	}
+	
+	.window .canvas .option:hover {
+		background-color: #7F7D6A;
+	}
+	
+.toolbar, .heading {	
+	font-weight: bold;
+	text-shadow: 0px 1px 0px #7F7E6A;
+}
+
+	.toolbar .selected {
+		color: #e0ffe0;
+		text-shadow: 0px 0px 2px #3A4C1A;
+	}
+	
+	.toolbar .selected2 {
+		color: #ffe0e0;
+		text-shadow: 0px 0px 2px #7F2F1F;
+	}
+
+	#toolbar_sort, .tooltip, .heading, .tools, .limitedlisting {
+		background-color: #7F7D6A;
+	}
+	
+#searchform input {
+	font-family: sans-serif;
+	border: none;
+}
+
+.heading {	
+	font-size: 12px;
+}
+
+.mod {
+	font-size: 10px;
+	color: #403F35;
+}
+	.mod:hover, .mod.mO:hover {
+		color: #FFFAD5;
+		background-color: #7F7D6B;
+	}
+	
+	.mod:hover a {
+		color: #fff !important;
+	}
+	
+	.mod .button_extend {
+		color: #000;
+		font-size: 20px;
+		font-weight: bold;
+		text-align: center;
+	}
+		
+		.mod .button_extend:hover {
+			background-color: #fff !important;
+		}
+	
+	.mod .flag, .canvas_flags h4 {
+		background: #fff;
+		color: #000;
+		font-weight: bold;
+		border-radius: 2px;
+		text-shadow: none;
+	}
+	
+/*
+	Mod types:
+	- mU: Updated
+	- mO: Outdated
+	- mX: Unknown
+	- mF: Favorite
+*/
+
+.mod.mU {
+	background-color: #A3BFA1;
+}
+	.mod.mU .button_extend {
+		background-color: #74CA6D;
+	}
+	
+	.mod.mU:hover {
+		background-color: #60715F;
+	}
+
+.mod.mO {
+	background-color: #BFBBA0;
+	color: #7E7E6B;
+}
+
+	.mod.mO .button_extend {
+		background-color: #7F7D6B;
+	}
+
+	.mod.mO a {
+		color: #646455;
+	}
+	
+	.mod.mO .flag {
+		color: #aaa;
+		background-color: #646455;
+	}
+
+.mod.mX, .mod.mX a {
+	color: #989780;
+}
+
+	.mod.mX {
+		background-color: #D8D4B5;
+	}
+
+	.mod.mX .button_extend {
+		background-color: #BEBCA0;
+	}
+
+	.mod.mX:hover {
+		background-color: #BEBCA0;
+	}
+
+.mod.mF {
+	background-color: #BFA1A1;
+}
+	
+	.mod.mF:hover {
+		background-color: #7F6B6B;
+	}
+	
+	.mod.mF > .button_extend {
+		background-color: #CA6D6D;
+	}
+	
+	.mod.mF > .tools > .button_fav {
+		color: #A03 !important;
+	}
+	
+	.mod.mF > .tools > .button_fav:hover {
+		color: #BBB !important;
+	}
+
+.emptylisting {
+	color: #BFBBA0;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.limitedlisting {
+	font-size: 18px;
+}
+
+.tools {
+	color: #FFFAD5;
+	font-size: 30px;
+}
+
+	.tools > a {
+		color: #FFFAD5 !important;
+	}
+	
+	.tools > a:hover {
+		color: #403F36 !important;
+	}

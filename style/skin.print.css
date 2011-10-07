@@ -1,0 +1,220 @@
+/* 	===================
+	MINECRAFT MOD INDEX
+	MONOLITH
+	
+	v1.0
+	===================
+*/
+
+body {
+	background: #fff;
+	color: #000;	
+	font-family: sans-serif;
+}
+
+a {
+	color: #2a2a2a;
+}
+
+	a:hover {
+	}
+	
+	a.button_confirm {
+		color: #a00;
+	}
+	
+	a#button_save, a#button_editor_submit {
+		color: #0a0;
+	}
+	
+header {
+	border: 2px solid;
+}
+
+input, textarea, select {
+	font-size: 14px;
+	font-family: sans-serif;
+	font-weight: bold;
+	border: 1px dashed;
+}
+
+.tooltip {
+	border: 1px solid #000;
+	background: #fff;
+	font-size: 12px;
+}
+
+.codebox {
+	font-family: monospace;
+	font-size: 10px;
+}
+
+.window {
+	background-color: rgb(255, 255, 255);
+	background-color: rgba(255, 255, 255, 0.95);
+	border: 2px solid #000;
+	border-bottom: 15px solid #000;
+}
+
+	.window .canvas .option {
+		border: 1px solid #fff;
+	}
+	
+	.window .canvas .option:hover {
+		border-color: #000 ;
+	}
+	
+.toolbar {	
+	font-weight: bold;
+}
+
+	.toolbar .selected {
+		color: #0a0;
+	}
+	
+	.toolbar .selected2 {
+		color: #a00;
+	}
+
+	#toolbar_sort, .heading {
+		border: 1px solid;
+	}
+	
+#searchform input {
+	font-family: sans-serif;
+	border: 2px solid #000;
+	height: 18px;
+}
+
+.heading {	
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.mod {
+	border: 1px solid #fff;
+	border-left: none;
+	background-color: #fff;
+	font-size: 10px;
+}
+
+	.mod .button_extend {
+		color: #fff;
+		font-size: 20px;
+		font-weight: bold;
+		text-align: center;
+	}
+		
+		.mod .button_extend:hover {
+			color: #000 !important;
+			background-color: #fff !important;
+		}
+	
+	.mod .flag, .canvas_flags h4 {
+		background: #000;
+		color: #fff;
+		font-weight: bold;
+		border-radius: 2px;
+	}
+	
+/*
+	Mod types:
+	- mU: Updated
+	- mO: Outdated
+	- mX: Unknown
+	- mF: Favorite
+*/
+
+.mod.mU {
+}
+	.mod.mU .button_extend {
+		background-color: #000;
+	}
+	
+	.mod.mU:hover {
+		border-color: #000;
+	}
+
+.mod.mO {
+	color: #6f6f6f;
+}
+
+	.mod.mO .button_extend {
+		background-color: #6f6f6f;
+	}
+
+	.mod.mO:hover {
+		border-color: #6f6f6f;
+	}
+
+	.mod.mO a {
+		color: #6f6f6f;
+	}
+	
+	.mod.mO .flag {
+		background-color: #6f6f6f;
+	}
+
+.mod.mX {
+	color: #8f8f8f;
+}
+
+	.mod.mX a {
+		color: #8f8f8f;
+	}
+
+	.mod.mX .button_extend {
+		background-color: #8f8f8f;
+	}
+
+	.mod.mX:hover {
+		border-color: #8f8f8f;
+	}
+
+.mod.mF {
+}
+	
+	.mod.mF:hover {
+		border-color: #f55;
+	}
+	
+	.mod.mF > .button_extend {
+		background-color: #f55;
+	}
+	
+	.mod.mF > .tools > .button_fav {
+		color: #f55 !important;
+	}
+	
+	.mod.mF > .tools > .button_fav:hover {
+		color: #000 !important;
+	}
+
+.mod:hover > a, .mod.mO a:hover, .mod.mU a:hover, .mod.mX a:hover {
+		
+}
+
+.emptylisting {
+	color: #666;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.limitedlisting {
+	border: 2px solid #000;
+	border-bottom: none;
+	font-size: 18px;
+}
+
+.tools {
+	color: #999;
+	font-size: 30px;
+}
+
+	.tools > a {
+		color: #000 !important;
+	}
+	
+	.tools > a:hover {
+		color: #444 !important;
+	}
