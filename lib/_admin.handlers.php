@@ -2,7 +2,7 @@
 /* 	============================================
 	THE MINECRAFT MOD INDEX
 	ADMIN PANEL HANDLERS
-	Version: v1.3
+
 	
 	by The Major / Crome Tysnomi / Ayman Habayeb
 	http://gnu32.deviantart.com

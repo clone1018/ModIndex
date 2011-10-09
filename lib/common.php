@@ -3,7 +3,7 @@
 /*	============================================
 	THE MINECRAFT MOD INDEX
 	COMMON LIBRARY AND SETTINGS
-	Version: v1.3
+
 
 	by The Major / Crome Tysnomi / Ayman Habayeb
 	http://gnu32.deviantart.com
@@ -29,7 +29,7 @@ if ( get_magic_quotes_gpc() ) {
 // CONSTANTS
 // =========
 
-define(VERSION,   1.2);
+define(VERSION,   1.3);
 define(TESTING,   ($_SERVER['HTTP_HOST'] == HOSTNAME_TESTING));
 
 define(VERSION_MINECRAFT_WILDCARD, 'any|all(\sversions)?');

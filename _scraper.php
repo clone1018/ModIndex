@@ -3,7 +3,7 @@
 /* 	============================================
 	THE MINECRAFT MOD INDEX
 	SCREEN SCRAPER AND DATA RETRIVAL ENGINE
-	Version: v1.3
+
 	
 	by The Major / Crome Tysnomi / Ayman Habayeb
 	http://gnu32.deviantart.com

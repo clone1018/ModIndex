@@ -2,7 +2,6 @@
 /* 	============================================
 	MODLISTER FOR MINECRAFTFORUM.NET
 	DATA PATCHER/SANDBOX/MIGRATIONS
-	Version: v0.9
 	
 	by The Major / Crome Tysnomi / Ayman Habayeb
 	http://gnu32.deviantart.com

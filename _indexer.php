@@ -2,7 +2,7 @@
 /* 	============================================
 	THE MINECRAFT MOD INDEX
 	INDEXING ENGINE
-	Version: v1.3
+
 	
 	by The Major / Crome Tysnomi / Ayman Habayeb
 	http://gnu32.deviantart.com
@@ -56,7 +56,7 @@ $STAT_BLACKLIST = 0;
 $INDEX = index_load(FILE_INDEX);
 
 // Walk through each row of the new index and merge it in with the old index
-foreach ($NEWINDEX as $key => $row) {
+foreach ($NEWINDEX as $key => &$row) {
 	
 	// Block/ignore blacklisted entries
 	if ( in_array($key, $SUBINDEXES['blacklist']) ) {
