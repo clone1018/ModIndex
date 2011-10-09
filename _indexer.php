@@ -70,6 +70,10 @@ foreach ($NEWINDEX as $key => $row) {
 		unset($INDEX[$key]);
 		continue;
 	}
+	
+	// Process the titles for tags
+	if ( !empty($row['version']) )
+			process_title($row, $key);
 		
 	if ($INDEX[$key]) {			
 		print_web('===== Row updated: '.$row['title'].N);
@@ -85,9 +89,6 @@ foreach ($NEWINDEX as $key => $row) {
 			$STAT_SPAM++;
 			continue;
 		}
-		
-		if ( !empty($row['version']) )
-			process_title($row, $key);
 			
 		print_web('===== New row added: '.$row['title'].N);
 		
@@ -118,14 +119,15 @@ function process_title(&$row, $id) {
 	// Automatically flag SMP mods
 	if ( preg_match('@'.REGEX_OPENBRACKETS.'(smp(?: vanila)?)'.REGEX_CLOSEBRACKETS.'@i',$row['title'],$tag) ) {
 		$SUBINDEXES['metadata'][$id]['flag_smp'] = true;
-		$row['title'] = trim( str_replace($tag[0],'',$row['title']) );
+		$row['title'] = trim( str_ireplace($tag[0],'',$row['title']) );
 	}
 	
 	// Automatically flag Modloader mods
 	if ( preg_match('@'.REGEX_OPENBRACKETS.'(ml|modloader)'.REGEX_CLOSEBRACKETS.'@i',$row['title'],$tag) ) {
 		$SUBINDEXES['metadata'][$id]['flag_modloader'] = true;
-		$row['title'] = trim( str_replace($tag[0],'',$row['title']) );
+		$row['title'] = trim( str_ireplace($tag[0],'',$row['title']) );
 	}
+
 }
 
 // ===============

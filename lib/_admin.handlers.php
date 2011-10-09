@@ -164,6 +164,10 @@ if ( is_numeric($_POST['motw_id']) ) {
 // EMAIL HANDLING
 // ==============
 
+if ( $_POST['email_oldid'] ) {
+	notification_send($_POST['email_oldid'], $_POST['email_type'], EMAIL_ADMIN, $INDEX[$_POST['email_oldid']], $INDEX[$_POST['email_newid']], true);
+}
+
 if ( $_GET['email_pop'] ) {
 	unset( $EMAIL_DB[2][$_GET['email_pop']] );
 	emaildb_save();

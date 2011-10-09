@@ -172,16 +172,16 @@ require_once('lib/_admin.func.php');
 	
 	<div class="heading clear">Moderation</div>
 	
-		<div class="center">
-			<form id="form_blacklist" method="POST" action="<?php echo URL_ADMIN ?>" accept-charset="UTF-8">
-				<input name="blacklist_add" /><br />
-				<b>Don't delete, just ignore</b> <input type="checkbox" name="blacklist_ignore" />
-				<input type="submit" value="Add to Blacklist / Delete from Index"/>
-			</form>
-		</div>
+	<div class="center">
+		<form id="form_blacklist" method="POST" action="<?php echo URL_ADMIN ?>" accept-charset="UTF-8">
+			<input name="blacklist_add" /><br />
+			<b>Don't delete, just ignore</b> <input type="checkbox" name="blacklist_ignore" />
+			<input type="submit" value="Add to Blacklist / Delete from Index"/>
+		</form>
+	</div>
+
+	<?php listing_blacklist(); ?>
 	
-		<?php listing_blacklist(); ?>
-		
 	<!--
 		===============
 		TWITTER SECTION
@@ -190,19 +190,19 @@ require_once('lib/_admin.func.php');
 	
 	<div class="heading clear">Twitter</div>
 	
-		<div class="center">
-			<form id="form_motw" method="POST" action="<?php echo URL_ADMIN ?>" accept-charset="UTF-8">
-				<input name="twitter_post" style="width: 100%" /><br />
-				<input type="submit" value="Tweet"/>
-			</form>
-		</div>
-		
-		<?php
-		if ($TWEET_SUCCESS === true)
-			echo '<h1 class="center" style="color:red">Success! Tweet was posted.</h1>';
-		else if ( is_string($TWEET_SUCCESS) )
-			echo '<h1 class="center" style="color:red">Failure! '.$TWEET_SUCCESS.'</h1>';
-		?>
+	<div class="center">
+		<form id="form_motw" method="POST" action="<?php echo URL_ADMIN ?>" accept-charset="UTF-8">
+			<input name="twitter_post" style="width: 100%" /><br />
+			<input type="submit" value="Tweet"/>
+		</form>
+	</div>
+	
+	<?php
+	if ($TWEET_SUCCESS === true)
+		echo '<h1 class="center" style="color:red">Success! Tweet was posted.</h1>';
+	else if ( is_string($TWEET_SUCCESS) )
+		echo '<h1 class="center" style="color:red">Failure! '.$TWEET_SUCCESS.'</h1>';
+	?>
 		
 	<!--
 		============
@@ -212,15 +212,15 @@ require_once('lib/_admin.func.php');
 	
 	<div class="heading clear">MOTW</div>
 	
-		<div class="center">
-			<form id="form_motw" method="POST" action="<?php echo URL_ADMIN ?>" accept-charset="UTF-8">
-				<input name="motw_id" /><br />
-				<input type="submit" value="Add to Queue"/>
-				<input name="motw_reset" type="submit" value="Flush" />
-			</form>
-		</div>
-	
-		<?php listing_motw(); ?>
+	<div class="center">
+		<form id="form_motw" method="POST" action="<?php echo URL_ADMIN ?>" accept-charset="UTF-8">
+			<input name="motw_id" /><br />
+			<input type="submit" value="Add to Queue"/>
+			<input name="motw_reset" type="submit" value="Flush" />
+		</form>
+	</div>
+
+	<?php listing_motw(); ?>
 
 	<!--
 		=============
@@ -236,11 +236,19 @@ require_once('lib/_admin.func.php');
 		<br />
 		Misuse of this data, including leaking/sharing it, is illegal in the UK under the <a href="http://www.legislation.gov.uk/ukpga/1998/29/contents" target="_blank">Data Protection Act of 1998</a>
 	</div>
+
+	<div class="center">
+		<form id="form_emailsend" method="POST" action="<?php echo URL_ADMIN ?>" accept-charset="UTF-8">
+			<input name="email_oldid" /> <input name="email_newid" /> <br />
+			<b>Type:</b> <input type="checkbox" name="email_type" />
+			<input type="submit" value="Send test notification"/>
+		</form>
+	</div>
 	
 	<?php listing_email(); ?>
-	
+
 	<div style="width: 100%; height: 256px; overflow: auto; color: #0f0;">
-	<pre><?php 	print_r($EMAIL_DB); ?></pre>
+		<pre><?php 	print_r($EMAIL_DB); ?></pre>
 	</div>
 	
 	<?php	

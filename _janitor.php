@@ -33,18 +33,10 @@ if (is_file(FILE_INDEX)) {
 	
 	$INDEX = unserialize(file_get_contents(FILE_INDEX));
 	
-	foreach ($INDEX as $key => $row) {				
-		if ((time() - $row['time_indexed']) > (60 * 60 * 24 * 14)) {
+	foreach ($INDEX as $key => $row) {		
+	
+		if ( (time() - $row['time_indexed']) > (60 * 60 * 24 * 14) ) {
 			print_web('Expired entry removed: '.$row['title'].N);
-			unset($INDEX[$key]);
-			$STAT_REMOVED++;
-			
-			continue;
-		}
-		
-		// Spam catcher (for when definitions are updated)
-		if ( ( empty($row['version']) && preg_match(REGEX_SPAM,$row['title']) ) || empty($row['title']) ) {
-			print_web('Spam entry removed: '.$row['title'].N);
 			unset($INDEX[$key]);
 			$STAT_REMOVED++;
 			

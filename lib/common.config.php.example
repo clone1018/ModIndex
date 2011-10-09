@@ -54,6 +54,7 @@ define(URL_INDEX_TESTING, HOSTNAME_TESTING.'/mods');
 
 // Email address of the administrator (for editor emails and alerts)
 define(EMAIL_ADMIN, 'webmaster@mods.com');
+define(EMAIL_NOTIFICATIONS, 'notifications@mods.com');
 
 // ========
 // SECURITY

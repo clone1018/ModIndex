@@ -132,10 +132,6 @@ if ( isset($_GET['email']) ) {
 // Are we handling email data via POST? (Internal forms; signing up for notifications)
 if ($_POST['email']) {
 
-    // Prevents external form spamming (to some degree).
-    if (!preg_match(REGEX_REFERERCHECK, $_SERVER['HTTP_REFERER']))
-        die('I don\'t think so, sweetheart.');
-
     // Make sure all emails are lowercase
     lower($_POST['email']);
 

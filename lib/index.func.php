@@ -670,6 +670,8 @@ function filterby_search($row, $key, $regex) {
     // Generate the "search definition" for the row
     $rowcontent = strtr($row['title'], $NORMALIZED_CHARSET) . '[' . (empty($row['version']) ? '???' : $row['version']) . ']' . $row['author'] . $row['desc'];
     $rowcontent .= $INDEX[$key]['keywords'];
+	$rowcontent .= $INDEX[$key]['flag_smp'] ? '[smp][multiplayer]' : '';
+    $rowcontent .= $INDEX[$key]['flag_modloader'] ? '[ml][modloader]' : '';
 
     lower($rowcontent);
 	

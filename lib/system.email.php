@@ -92,10 +92,10 @@ function has_notification($id, $type, $email) {
 }
 
 // Fires off a notification; should be called outside _email.php
-function notification_send($id, $type, $email, $oldrow, $newrow) {
+function notification_send($id, $type, $email, $oldrow, $newrow, $force = false) {
 	
 	// ONLY send notifications if target email is verified. No exceptions.
-	if ( !is_verified($email) )
+	if ( !is_verified($email) && !$force )
 		return false;
 	
 	// Generate our subject based on notification type
@@ -312,7 +312,7 @@ function email_send($destination,$subject,$data,$deverify = FALSE, $type = NOTIF
 	
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-	$headers .= 'From: Minecraft Mod Index <notifications@' . $_SERVER['HTTP_HOST'] . '>' . "\r\n";
+	$headers .= 'From: Minecraft Mod Index <' . EMAIL_NOTIFICATIONS . '>' . "\r\n";
 
 	// Mail it
 	mail($destination, $subject, $message, $headers);

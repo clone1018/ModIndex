@@ -10,6 +10,7 @@
 */
 
 require_once('lib/common.php');
+header('Content-type: text/plain;');
 auth_access($argv);
 
 $INDEX;
@@ -26,24 +27,46 @@ $SUBINDEXES = array(
 // MAIN PROGRAM
 // ============
 
-echo '<pre>';
-if (is_file(FILE_INDEX)) {
+if ( is_file(FILE_INDEX) ) {
 
 	// Backup by timestamp. Important!
 	copy( FILE_INDEX, FILE_INDEX.time() );
 	$INDEX = index_load(FILE_INDEX);
 	
-	foreach ($INDEX as $key => $row) {
-		$INDEX[$key]['author_id'] = str_replace(URL_USERFULL,'',$row['author_id']);
-		$UPDATED++;
+	foreach ($INDEX as $key => &$row) {
+		// Block/destroy any [WIP] mods
+		if ( preg_match('@'.REGEX_OPENBRACKETS.'WIP'.REGEX_CLOSEBRACKETS.'@i',$row['title']) ) {
+			print_web('===== WIP row deleted: '.$row['title'].N);
+			unset($INDEX[$key]);
+			continue;
+		}
+		
+		process_title($row, $key);
 	}
 	
 	index_save(FILE_INDEX,$INDEX);
-	//index_save(FILE_METADATA,$SUBINDEXES['metadata']);
+	index_save(FILE_METADATA,$SUBINDEXES['metadata']);
 	debug("Successfully applied fixes; $UPDATED rows affected.");
 } else {
 	die('There\'s nothing to fix; Index is missing. Generate the index first!');
 }
-echo '</pre>';
+
+function process_title(&$row, $id) {
+	global $SUBINDEXES;
+	
+	// Automatically flag SMP mods
+	if ( preg_match('@'.REGEX_OPENBRACKETS.'(smp(?: vanila)?)'.REGEX_CLOSEBRACKETS.'@i',$row['title'],$tag) ) {
+		$SUBINDEXES['metadata'][$id]['flag_smp'] = true;
+		$row['title'] = trim( str_ireplace($tag[0],'',$row['title']) );
+		print_web('===== SMP tag added: '.$row['title'].N);
+	}
+	
+	// Automatically flag Modloader mods
+	if ( preg_match('@'.REGEX_OPENBRACKETS.'(ml|modloader)'.REGEX_CLOSEBRACKETS.'@i',$row['title'],$tag) ) {
+		$SUBINDEXES['metadata'][$id]['flag_modloader'] = true;
+		$row['title'] = trim( str_ireplace($tag[0],'',$row['title']) );
+		print_web('===== Modloader tag added: '.$row['title'].N);
+	}
+}
 
 ?>
