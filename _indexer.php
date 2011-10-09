@@ -20,15 +20,16 @@ $SUBINDEXES;
 $TWITTER;
 
 $SUBINDEXES = array(
-	'blacklist' => index_load(FILE_BLACKLIST)
+	'blacklist' => index_load(FILE_BLACKLIST),
+	'metadata' => index_load(FILE_METADATA)
 );
 
 // ============
 // MAIN PROGRAM
 // ============
 
-// Stage 1. Get the fresh, new temp index and convert it into a proper array
-if (is_file(FILE_TEMPINDEX)) {
+// ===== Stage 1. Get the fresh, new temp index and convert it into a proper array
+if ( is_file(FILE_TEMPINDEX) ) {
 	// Get the data from the generated temporary index
 	$file = fopen(FILE_TEMPINDEX, 'r') or die('There was a problem reading the temp index. Please make sure the script\'s folder has the permissions \'0777\' set on it.');
 
@@ -44,63 +45,88 @@ if (is_file(FILE_TEMPINDEX)) {
 	die('There\'s nothing to index; temp.db is missing. Run the scraper first!');
 }
 
-// Stage 2. Create or otherwise merge to the live-fire index
-if (is_file(FILE_INDEX)) {
+// ===== Stage 2. Create or otherwise merge to the live-fire index
 
-	// Statistics
-	$STAT_UPDATES = 0;
-	$STAT_ADDITIONS = 0;
-	$STAT_EMAILS = 0;
-	$STAT_SPAM = 0;
-	$STAT_BLACKLIST = 0;
-	$INDEX = unserialize( file_get_contents(FILE_INDEX) );
+// Statistics
+$STAT_UPDATES = 0;
+$STAT_ADDITIONS = 0;
+$STAT_EMAILS = 0;
+$STAT_SPAM = 0;
+$STAT_BLACKLIST = 0;
+$INDEX = index_load(FILE_INDEX);
+
+// Walk through each row of the new index and merge it in with the old index
+foreach ($NEWINDEX as $key => $row) {
 	
-	// Walk through each row of the new index and merge it in with the old index
-	foreach ($NEWINDEX as $key => $row) {
-		// Block/ignore blacklisted entries
-		if ( in_array($key, $SUBINDEXES['blacklist']) ) {
-			print_web('===== Blacklisted row discarded: '.$row['title'].N);
-			$STAT_BLACKLIST++;
-			continue;
-		}
-			
-		if ($INDEX[$key]) {			
-			print_web('===== Row updated: '.$row['title'].N);
-			
-			// Process updates, for things like email notifcations
-			process_updates($INDEX[$key],$row,$key,$STAT_EMAILS);
-			$STAT_UPDATES++;
-		} else {
-			
-			// Block spam before adding it to the index
-			if ( ( empty($row['version']) && preg_match(REGEX_SPAM,$row['title']) ) || empty($row['title']) ) {
-				print_web('===== Spam row discarded: '.$row['title'].N);
-				$STAT_SPAM++;
-				continue;
-			}
-			
-			print_web('===== New row added: '.$row['title'].N);
-			
-			$STAT_ADDITIONS++;
-		}
-		
-		$INDEX[$key] = $row;
-		unset($NEWINDEX[$key],$key,$row);
+	// Block/ignore blacklisted entries
+	if ( in_array($key, $SUBINDEXES['blacklist']) ) {
+		print_web('===== Blacklisted row discarded: '.$row['title'].N);
+		$STAT_BLACKLIST++;
+		continue;
 	}
 	
-	// We're done here.
-	unset($NEWINDEX);
-	write_index($INDEX);
+	// Block/destroy any [WIP] mods
+	if ( preg_match('@'.REGEX_OPENBRACKETS.'WIP'.REGEX_CLOSEBRACKETS.'@i',$row['title']) ) {
+		unset($INDEX[$key]);
+		continue;
+	}
+		
+	if ($INDEX[$key]) {			
+		print_web('===== Row updated: '.$row['title'].N);
+		
+		// Process updates, for things like email notifcations
+		process_updates($INDEX[$key],$row,$key,$STAT_EMAILS);
+		$STAT_UPDATES++;
+	} else {
+		
+		// Block spam before adding it to the index
+		if ( ( empty($row['version']) && preg_match(REGEX_SPAM,$row['title']) ) || empty($row['title']) ) {
+			print_web('===== Spam row discarded: '.$row['title'].N);
+			$STAT_SPAM++;
+			continue;
+		}
+		
+		if ( !empty($row['version']) )
+			process_title($row, $key);
+			
+		print_web('===== New row added: '.$row['title'].N);
+		
+		$STAT_ADDITIONS++;
+	}
 	
-	echo "Successfully updated the index: $STAT_UPDATES commited, $STAT_EMAILS emails sent, $STAT_ADDITIONS additions made,
-	$STAT_SPAM spam entries blocked, $STAT_BLACKLIST blacklisted entries blocked.";
-} else {
-	write_index($NEWINDEX);
-	echo 'Successfully created the index.';
+	$INDEX[$key] = $row;
+	unset($NEWINDEX[$key],$key,$row);
 }
+
+// We're done here.
+unset($NEWINDEX);
+index_save(FILE_INDEX, $INDEX);
+index_save(FILE_METADATA, $SUBINDEXES['metadata']);
+
+echo "Successfully updated the index: $STAT_UPDATES commited, $STAT_EMAILS emails sent, $STAT_ADDITIONS additions made,
+$STAT_SPAM spam entries blocked, $STAT_BLACKLIST blacklisted entries blocked.";
 
 // Finally, dispose of the temporary index.
 unlink(FILE_TEMPINDEX);
+
+// =============
+// DATA HANDLING
+// =============
+function process_title(&$row, $id) {
+	global $SUBINDEXES;
+	
+	// Automatically flag SMP mods
+	if ( preg_match('@'.REGEX_OPENBRACKETS.'(smp(?: vanila)?)'.REGEX_CLOSEBRACKETS.'@i',$row['title'],$tag) ) {
+		$SUBINDEXES['metadata'][$id]['flag_smp'] = true;
+		$row['title'] = trim( str_replace($tag[0],'',$row['title']) );
+	}
+	
+	// Automatically flag Modloader mods
+	if ( preg_match('@'.REGEX_OPENBRACKETS.'(ml|modloader)'.REGEX_CLOSEBRACKETS.'@i',$row['title'],$tag) ) {
+		$SUBINDEXES['metadata'][$id]['flag_modloader'] = true;
+		$row['title'] = trim( str_replace($tag[0],'',$row['title']) );
+	}
+}
 
 // ===============
 // UPDATE HANDLING
@@ -154,17 +180,6 @@ function process_updates($oldrow, $newrow, $id, &$STAT_EMAILS) {
 		}
 	}
 
-}
-
-// =============
-// FILE HANDLING
-// =============
-
-function write_index($data) {
-	$file = fopen(FILE_INDEX, 'w') or die('There was a problem writing the index. Please make sure the script\'s folder has the permissions \'0777\' set on it.');
-	fwrite($file, serialize($data));
-		
-	fclose($file);
 }
 
 ?>

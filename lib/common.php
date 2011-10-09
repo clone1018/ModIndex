@@ -35,22 +35,25 @@ define(TESTING,   ($_SERVER['HTTP_HOST'] == HOSTNAME_TESTING));
 define(VERSION_MINECRAFT_WILDCARD, 'any|all(\sversions)?');
 define(VERSION_MINECRAFT,          '@^('. VERSION_MINECRAFT_CURRENT .'|' . VERSION_MINECRAFT_WILDCARD . ')$@i');
 
+// ===== Regexes
+define(REGEX_OPENBRACKETS, '(?:\[|\(|\{)');
+define(REGEX_CLOSEBRACKETS, '(?:\]|\)|\})');
+
 define(REGEX_VERSION_PREFIXES, '(?:b|beta|v\.?|ver|version|for version|minecraft\s?v?|modloader|mc)?');
 define(REGEX_VERSION_BASICNUMERICAL, '\s?(1\.\d(?:(?:\.|\_)\d{1,2})?(?:(?:_|-|\s)?pre?(\s?[0-9])?)?)\s?');
 define(REGEX_VERSION_BASICWILDCARD, '\s?(' . VERSION_MINECRAFT_WILDCARD . ')\s?');
 define(REGEX_VERSION_NUMERICAL, REGEX_VERSION_PREFIXES . REGEX_VERSION_BASICNUMERICAL . REGEX_VERSION_PREFIXES);
-define(REGEX_VERSION_OPENBRACKETS, '(?:\[|\(|\{)');
-define(REGEX_VERSION_CLOSEBRACKETS, '(?:\]|\)|\})');
-define(REGEX_VERSION, '@' . REGEX_VERSION_OPENBRACKETS . '\s?' . REGEX_VERSION_NUMERICAL . '\s?(?:(?:/|-|,)\s?' . REGEX_VERSION_NUMERICAL . '\s?)*(?:b|beta)?\s?' . REGEX_VERSION_CLOSEBRACKETS . '@i');
-define(REGEX_VERSIONWILDCARD, '@' . REGEX_VERSION_OPENBRACKETS . REGEX_VERSION_BASICWILDCARD . REGEX_VERSION_CLOSEBRACKETS . '@i');
+define(REGEX_VERSION, '@' . REGEX_OPENBRACKETS . '\s?' . REGEX_VERSION_NUMERICAL . '\s?(?:(?:/|-|,)\s?' . REGEX_VERSION_NUMERICAL . '\s?)*(?:b|beta)?\s?' . REGEX_CLOSEBRACKETS . '@i');
+define(REGEX_VERSIONWILDCARD, '@' . REGEX_OPENBRACKETS . REGEX_VERSION_BASICWILDCARD . REGEX_CLOSEBRACKETS . '@i');
 define(REGEX_VERSIONBASIC, '@' . REGEX_VERSION_BASICNUMERICAL . '@i');
 
 define(REGEX_SPAM_TERMS, '\s?(?:req(uest)?|del(ete)?|help|coming\ssoon|closed|discontinued|w(ork\s?)?i(n\s?)?p(rogress)?|tut(orial)?)?\s?');
 define(REGEX_SPAM_BEGGING, 'help|question|req(u|w)est|how\sdo\si|\?|idea|problem|how to|seeking|please|need|abandoned|looking|issues|closed');
 define(REGEX_SPAM_MALICIOUS, 'minecr?aft code|codes|hentai|giveaway|prem\\s?account|give \d{1,2} minecraft|free|poker|dress|cialis|viagra|sony|adf\.?ly');
 define(REGEX_SPAM_MALICIOUS2, 'karen|hold\'em|order|sale|discount|research|phone|contract|cheap');
-define(REGEX_SPAM, '@(' . REGEX_VERSION_OPENBRACKETS . REGEX_SPAM_TERMS . REGEX_VERSION_CLOSEBRACKETS . '|' . REGEX_SPAM_BEGGING . '|' . REGEX_SPAM_MALICIOUS . '|' . REGEX_SPAM_MALICIOUS2 . ')@i');
+define(REGEX_SPAM, '@(' . REGEX_OPENBRACKETS . REGEX_SPAM_TERMS . REGEX_CLOSEBRACKETS . '|' . REGEX_SPAM_BEGGING . '|' . REGEX_SPAM_MALICIOUS . '|' . REGEX_SPAM_MALICIOUS2 . ')@i');
 
+// ===== URLs
 define(URL_INDEX,    'http://'.(TESTING ? URL_INDEX_TESTING : URL_INDEX_LIVEFIRE) );
 define(URL_FORUM,    'http://minecraftforum.net/forum/51-released-mods/page__prune_day__15__sort_by__A-Z__sort_key__title__topicfilter__open__st__');
 define(URL_TOPIC,    'http://minecraftforum.net/index.php?showtopic=');

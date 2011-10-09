@@ -23,7 +23,7 @@ require_once('lib/index.func.php');
 	<link rel="shortcut icon" href="favicon.png" />
 	<link rel="canonical" href="http://mods.simplaza.net" />
 	<link href="style/index.css" rel="stylesheet" type="text/css">
-	<link href="style/skin.<?php echo pick($USER['JS_SETTINGS']['style']['skin'], 'monolith');?>.css" rel="stylesheet" type="text/css">
+	<link href="style/skin.<?php echo pick($SETTINGS['style']['skin'], 'monolith');?>.css" rel="stylesheet" type="text/css">
 	
 	<script type="text/javascript" src="<?php echo 'http://'.(TESTING ? 'localhost' : 'simplaza.net').'/common/'; ?>js"></script>
 	<script type="text/javascript" src="lib/index.js"></script>
@@ -33,7 +33,7 @@ require_once('lib/index.func.php');
 </head>
 
 <body onload="init();">	
-<div id='root' class="root <?php echo ($USER['JS_SETTINGS']['style']['hide_desc'] && $USER['JS_SETTINGS']['style']['hide_flags']) ? 'listing_mini' : false; ?>">
+<div id='root' class="root <?php echo ($SETTINGS['style']['hide_desc'] && $SETTINGS['style']['hide_flags']) ? 'listing_mini' : false; ?>">
 	<?php ui_dialog(); ?>
 	
 	<div class="windowroot">
@@ -260,8 +260,8 @@ require_once('lib/index.func.php');
 	<div class="tooltip hidden" id="tooltip_field_search">
 		<h4>How to use filters:</h4>
 		<p>Simply use them alongside your search terms. Examples:</p>
-		<div class='center'><em>airship !updated</em></div>
-		<div class='center'><em>!favorites planes</em></div>
+		<div class='center'><em><a href="?q=airship+!updated">airship !updated</a></em></div>
+		<div class='center'><em><a href="?q=!favorites+planes">!favorites planes</a></em></div>
 		
 		<hr />
 		<h4>Filters avaliable:</h4>
@@ -269,6 +269,7 @@ require_once('lib/index.func.php');
 			<li><b>~adfly</b> - Hide Adf.ly-forced mods</li>
 			<li><b>!updated</b> - Show only updated mods</li>
 			<li><b>!favorites</b> - Show only favorited mods</li>
+			<li><b>.regex</b> - Parse search query as <a href="http://docs.google.com/viewer?url=http%3A%2F%2Fcdn.cloudfiles.mosso.com%2Fc8031%2FPHP_PCRE_Cheat_Sheet.pdf">PCRE Regex</a></li>
 		</ul>
 		<hr />
 		<h4>Accented and Unicode characters may break search.</h4>

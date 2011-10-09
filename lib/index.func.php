@@ -32,11 +32,11 @@ define(SORT_MAGIC_VIEWSTHRESHOLD, 200);
 define(SORT_MAGIC_VIEWSPROBABILITY, 200);
 
 // ===== Index states
-define(STATE_NORMAL, 1);  // Normal listing mode
-define(STATE_SEARCHED, 2); // Search results
-define(STATE_FILTERED, 4); // Filtered results
-define(STATE_SORTED, 8);  // Manually sorted results
-define(STATE_LIMITED, 16); // Manually limited results
+define(STATE_NORMAL,   1);  // Normal listing mode
+define(STATE_SEARCHED, 2);  // Search results
+define(STATE_FILTERED, 4);  // Filtered results
+define(STATE_SORTED,   8);  // Manually sorted results
+define(STATE_LIMITED,  16); // Manually limited results
 
 // ===== Code generation types
 define(CODE_HTML, 0);
@@ -54,6 +54,8 @@ $STATE;
 $DIALOG;
 $NORMALIZED_CHARSET;
 
+$SETTINGS;
+$SETTINGS_DEFAULT;
 $USER;
 $SORTING;
 $STATS;
@@ -67,13 +69,48 @@ $SUBINDEXES = array(
 // ===== State Global
 $STATE = STATE_NORMAL;
 
+// ===== Default User Settings
+$SETTINGS_DEFAULT = array(
+	'rowstyle' => array(
+		'latest' => array(
+			'clr_button' => false,
+			'clr_background' => false,
+			'clr_backgroundhover' => false,
+			'clr_font' => false,
+			'opacity' => false,
+			'fontsize' => false
+		)
+	),
+	'style' => array(
+		'skin' => 'monolith',
+		'font' => false,
+		'hide_desc' => false,
+		'hide_time_created' => true,
+		'hide_views' => false,
+		'hide_author' => false,
+		'hide_flags' => false,
+		'disable_motw' => false
+	)
+);
+
+$SETTINGS_DEFAULT['rowstyle']['outdated'] = $SETTINGS_DEFAULT['rowstyle']['latest'];
+$SETTINGS_DEFAULT['rowstyle']['unknown']  = $SETTINGS_DEFAULT['rowstyle']['latest'];
+$SETTINGS_DEFAULT['rowstyle']['favorite'] = $SETTINGS_DEFAULT['rowstyle']['latest'];
+
+// ===== User Settings
+if (!$_COOKIE['settings']) {
+	setcookie('settings', json_encode($SETTINGS_DEFAULT) ,time()+60*60*24*600,'/');
+	$SETTINGS = $SETTINGS_DEFAULT;
+} else {
+	$SETTINGS = json_decode($_COOKIE['settings'], true);
+}
+
 // ===== User Data Globals
 $USER = array(
-    'FAVORITES' => ($_COOKIE['favorites'] ? explode(',', $_COOKIE['favorites']) : NULL),
-    'FILTERS' => array(),
+    'FAVORITES'   => ($_COOKIE['favorites'] ? explode(',', $_COOKIE['favorites']) : NULL),
+    'FILTERS'     => array(),
     'SEARCHQUERY' => init_searchquery(),
-    'SEARCHTERMS' => '',
-    'JS_SETTINGS' => json_decode(stripslashes($_COOKIE['settings']), true)
+    'SEARCHTERMS' => ''
 );
 
 // ===== Sorting Globals
@@ -199,7 +236,7 @@ function init_searchquery() {
 
 // The super-function that handles the main listing and index processing
 function init_index() {
-    global $INDEX, $SUBINDEXES, $BUFFER, $USER, $SORTING, $STATS, $STATE;
+    global $INDEX, $SUBINDEXES, $BUFFER, $SETTINGS, $USER, $SORTING, $STATS, $STATE;
 
     // If we've got a search query, run the search engine
     if (!empty($USER['SEARCHQUERY']))
@@ -232,7 +269,7 @@ function init_index() {
 
         // If the index is not being searched, filtered or manually sorted, show Mod of the Week
         // FIXME: This is depressing, this isn't how bitwise operations aren't supposed to work! Can somebody clean this up?
-        if (( ($STATE == STATE_NORMAL) || ($STATE == (STATE_NORMAL | STATE_LIMITED) ) ) && !$USER['JS_SETTINGS']['style']['disable_motw'])
+        if (( ($STATE == STATE_NORMAL) || ($STATE == (STATE_NORMAL | STATE_LIMITED) ) ) && !$SETTINGS['style']['disable_motw'])
             init_index_motw();
 
         // If after favorites and search filter the index has more than 150 entries, then we limit unless specified otherwise
@@ -385,18 +422,18 @@ function list_heading($title, $html = null) {
 
 // Walking function that generates a row of data in HTML format to the global buffer.
 function list_item(&$row, $key, $classes = null) {
-    global $BUFFER, $USER;
+    global $BUFFER, $SETTINGS, $USER;
 
     // Limits title's length and snips it with ellipses
     if (strlen($row['title']) > 80)
         $row['title'] = substr($row['title'], 0, 80) . '...';
 
     // If description is empty, add a whitespace to double-line
-	$time_created = $USER['JS_SETTINGS']['style']['hide_time_created'] ? false : ($row['time_created'] ? date('H:i d/m/Y \- ', $row['time_created']) : '<em>??:?? ??/??/???? - </em>');
-    $desc = $USER['JS_SETTINGS']['style']['hide_desc'] ? false : $time_created.( $row['desc'] ? html($row['desc']) : '&nbsp;');
-    $views = $USER['JS_SETTINGS']['style']['hide_views'] ? false : "<b>$row[views]</b> views";
-    $author = $USER['JS_SETTINGS']['style']['hide_author'] ? false : "<b><a target='_blank' href='" . URL_USER . "$row[author_id]'>$row[author]</a></b>" . ($views ? ',' : '');
-    $flags = ( $USER['JS_SETTINGS']['style']['hide_flags'] || empty($row['version']) ) ? false : '<div class="flags">' . list_item_flags($row) . '</div>';
+	$time_created = $SETTINGS['style']['hide_time_created'] ? false : ($row['time_created'] ? date('H:i d/m/Y \- ', $row['time_created']) : '<em>??:?? ??/??/???? - </em>');
+    $desc = $SETTINGS['style']['hide_desc'] ? false : $time_created.( $row['desc'] ? html($row['desc']) : '&nbsp;');
+    $views = $SETTINGS['style']['hide_views'] ? false : "<b>$row[views]</b> views";
+    $author = $SETTINGS['style']['hide_author'] ? false : "<b><a target='_blank' href='" . URL_USER . "$row[author_id]'>$row[author]</a></b>" . ($views ? ',' : '');
+    $flags = ( $SETTINGS['style']['hide_flags'] || empty($row['version']) ) ? false : '<div class="flags">' . list_item_flags($row) . '</div>';
 
     $BUFFER .=
             "<div id='$key' class='mod " . list_item_vclass($row['version']) . ' ' . $classes . "'>
@@ -569,6 +606,7 @@ function sortby_created($a, $b) {
 function search_engine() {
     global $INDEX, $USER;
     $USER['SEARCHTERMS'] = explode(' ', $USER['SEARCHQUERY']);
+	$regex = false;
 
     // Look for Favorites filter, remove from terms if found
     if (is_numeric($k = array_search('!favorites', $USER['SEARCHTERMS']))) {
@@ -589,6 +627,12 @@ function search_engine() {
         array_walk($INDEX, 'filterby_adfly');
         unset($USER['SEARCHTERMS'][$k]);
     }
+	
+	// Regex flag
+    if (is_numeric($k = array_search('.regex', $USER['SEARCHTERMS']))) {
+        $regex = true;
+        unset($USER['SEARCHTERMS'][$k]);
+    }
 
     // If we have filters, change state as appropriate
     if (!empty($USER['FILTERS']))
@@ -596,10 +640,14 @@ function search_engine() {
 
     // Put terms back together again, minus filters.
     $USER['SEARCHTERMS'] = implode(' ', $USER['SEARCHTERMS']);
-
+	
     // If we still have a query after filters, execute search filter!
-    if (!empty($USER['SEARCHTERMS']))
-        array_walk($INDEX, 'filterby_search');
+    if (!empty($USER['SEARCHTERMS'])) {
+		// Tempoarily disable warnings for regex searching
+		$error = error_reporting(0);
+        array_walk($INDEX, 'filterby_search', $regex);
+		error_reporting($error);
+	}
 }
 
 function filterby_latest($row, $key) {
@@ -616,7 +664,7 @@ function filterby_adfly($row, $key) {
         unset($INDEX[$key]);
 }
 
-function filterby_search($row, $key) {
+function filterby_search($row, $key, $regex) {
     global $INDEX, $USER, $NORMALIZED_CHARSET;
 
     // Generate the "search definition" for the row
@@ -624,9 +672,15 @@ function filterby_search($row, $key) {
     $rowcontent .= $INDEX[$key]['keywords'];
 
     lower($rowcontent);
-
-    if (stripos($rowcontent, $USER['SEARCHTERMS']) === false)
-        unset($INDEX[$key]);
+	
+	if ($regex) {
+		if ( !preg_match('@'.$USER['SEARCHTERMS'].'@i',$rowcontent) )
+			unset($INDEX[$key]);
+		
+		return true;
+	} else if ( stripos($rowcontent, $USER['SEARCHTERMS']) === false ) {
+		unset($INDEX[$key]);
+	}
 }
 
 // ==============
