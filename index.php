@@ -85,6 +85,7 @@ require_once('lib/index.func.php');
 						<span class="toolbar">
 							<a href="lib/credits.html" target="_blank" class="button" title="Credits to the creators and contributors of the Mod Index">Credits</a>
 							<a href="http://twitter.com/Gnu32" target="_blank" class="button" title="Official Twitter feed for Mod Index software updates">Updates</a>
+							<a href="http://code.google.com/p/minecraft-mod-index/" target="_blank" class="button" title="Source code of the Minecraft Mod Index">Source</a>
 						</span>
 					</h4>
 					<h6>Peak Memory:</h6> <p><?php echo $STATS['SYSTEM_PEAKMEM']; ?> KB</p>
@@ -98,6 +99,7 @@ require_once('lib/index.func.php');
 							<a href="?random" target="_blank" class="button" title="Picks a random, up-to-date mod">Random</a>
 							<a href="?raw" class="button" title="Hot-linkable raw comma seperated format of the index data">Raw CSV</a>
 							<a href="<?php echo FILE_INDEX?>" class="button" title="Raw PHP serialized array file of index data">File</a>
+							<a href="http://twitter.com/MCMods" class="button" title="Twitter feed of updated Minecraft mods">Twitter</a>
 						</span>
 					</h4>
 					<h6>Entries:</h6> <p><?php echo $STATS['INDEX_ENTRIES']; ?></p>
