@@ -61,13 +61,16 @@ define(URL_USERFULL, 'http://www.minecraftforum.net/user/');
 define(URL_USER,     'http://minecraftforum.net/user/');
 
 define(DIRECTORY_DATABASE, 'data/');
-define(FILE_INDEX, DIRECTORY_DATABASE . 'index.db');
-define(FILE_TEMPINDEX, DIRECTORY_DATABASE . 'tempindex.db');
-define(FILE_METADATA, DIRECTORY_DATABASE . 'metadata.db');
-define(FILE_BLACKLIST, DIRECTORY_DATABASE . 'blacklist.db');
-define(FILE_JOB, DIRECTORY_DATABASE . 'job.db');
-define(FILE_EMAIL, DIRECTORY_DATABASE . 'email.db');
-define(FILE_MOTW, DIRECTORY_DATABASE . 'motw.db');
+define(DIRECTORY_ARCHIVES, 'archives/');
+define(DIRECTORY_STATISTICS, DIRECTORY_DATABASE.'stats/');
+define(FILE_INDEX,      DIRECTORY_DATABASE . 'index.db');
+define(FILE_TEMPINDEX,  DIRECTORY_DATABASE . 'tempindex.db');
+define(FILE_METADATA,   DIRECTORY_DATABASE . 'metadata.db');
+define(FILE_BLACKLIST,  DIRECTORY_DATABASE . 'blacklist.db');
+define(FILE_JOB,        DIRECTORY_DATABASE . 'job.db');
+define(FILE_EMAIL,      DIRECTORY_DATABASE . 'email.db');
+define(FILE_MOTW,       DIRECTORY_DATABASE . 'motw.db');
+define(FILENAME_STATISTICS, 'statistics.db');
 
 define(NOTIFICATION_VERSION, 0);
 define(NOTIFICATION_TITLE, 1);
@@ -129,10 +132,9 @@ function file_write($filename, $data, $error, $append = FALSE) {
 // Plain and simple Index (PHP serialized array format) loader
 function index_load($file) {
     if (!is_file($file)) {
-        touch($file);
         return array();
     } else {
-        return unserialize(file_get_contents($file));
+        return unserialize( file_get_contents($file) );
     }
 }
 
@@ -168,6 +170,11 @@ function index_random($index) {
             unset($index[$rand]);
         
     }
+}
+
+function get_timestamp($name) {
+    preg_match('@[a-z]+\.db([0-9]+)@i', $name, $matches);
+    return $matches[1];
 }
 
 // ==================
