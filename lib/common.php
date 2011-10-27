@@ -60,17 +60,22 @@ define(URL_TOPIC,    'http://minecraftforum.net/index.php?showtopic=');
 define(URL_USERFULL, 'http://www.minecraftforum.net/user/');
 define(URL_USER,     'http://minecraftforum.net/user/');
 
-define(DIRECTORY_DATABASE, 'data/');
-define(DIRECTORY_ARCHIVES, 'archives/');
-define(DIRECTORY_STATISTICS, DIRECTORY_DATABASE.'stats/');
-define(FILE_INDEX,      DIRECTORY_DATABASE . 'index.db');
+// ===== Files
+define(DIRECTORY_DATABASE,    'data/');
+define(DIRECTORY_ARCHIVES,    'archives/');
+define(DIRECTORY_STATISTICS,  DIRECTORY_DATABASE . 'stats/');
+
+define(FILENAME_STATISTICS, 'statistics.db');
+define(FILENAME_INDEX,      'index.db');
+define(FILENAME_METADATA,   'metadata.db');
+
+define(FILE_INDEX,      DIRECTORY_DATABASE . FILENAME_INDEX);
+define(FILE_METADATA,   DIRECTORY_DATABASE . FILENAME_METADATA);
 define(FILE_TEMPINDEX,  DIRECTORY_DATABASE . 'tempindex.db');
-define(FILE_METADATA,   DIRECTORY_DATABASE . 'metadata.db');
 define(FILE_BLACKLIST,  DIRECTORY_DATABASE . 'blacklist.db');
 define(FILE_JOB,        DIRECTORY_DATABASE . 'job.db');
 define(FILE_EMAIL,      DIRECTORY_DATABASE . 'email.db');
 define(FILE_MOTW,       DIRECTORY_DATABASE . 'motw.db');
-define(FILENAME_STATISTICS, 'statistics.db');
 
 define(NOTIFICATION_VERSION, 0);
 define(NOTIFICATION_TITLE, 1);
@@ -131,15 +136,14 @@ function file_write($filename, $data, $error, $append = FALSE) {
 
 // Plain and simple Index (PHP serialized array format) loader
 function index_load($file) {
-    if (!is_file($file)) {
+    if ( !is_file($file) )
         return array();
-    } else {
+    else
         return unserialize( file_get_contents($file) );
-    }
 }
 
 function index_require($file) {
-    if (!is_file($file))
+    if ( !is_file($file) )
         die('Call to index_require failed: Index ' . $file . ' does not exist!');
 
     return unserialize(file_get_contents($file));
