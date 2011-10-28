@@ -105,6 +105,57 @@ if ( isset($_GET['raw']) ) {
     exit;
 }
 
+if ( isset($_GET['irc']) ) {
+    header('Content-Type: text/plain; charset=utf-8');
+    
+    if ( $USER['SEARCHQUERY'] == '.random' ) {
+        while (true) {
+            if (empty($INDEX))
+                die('<reply> Could not pick a random mod! There are no up-to-date mods in the index.');
+
+            $rand = array_rand($INDEX);
+
+            // Unversioned? Skip.
+            if (!$INDEX[$rand]['version']) {
+                unset($INDEX[$rand]);
+                continue;
+            }
+
+            if ( preg_match(VERSION_MINECRAFT, $INDEX[$rand]['version']) ) {
+                $data[$rand] = $INDEX[$rand];
+                break;
+            } else {
+                unset($INDEX[$rand]);
+            }
+        }
+    } else if ( is_numeric($USER['SEARCHQUERY']) ) {
+        $id = &$USER['SEARCHQUERY'];
+        
+        if ( !array_key_exists($id, $INDEX) )
+            die('<reply> ID '.$id.' doesn\'t exist in the index!');
+        
+        $data[$id] = $INDEX[$id];
+    } else if ( !empty($USER['SEARCHQUERY']) ) {
+        search_engine();
+        sort_index($INDEX);
+        $data = &$INDEX;
+    } else {
+        die('<reply> Syntax is: !modsearch [.random] [[~adfly] [!updated] [.regex] id OR searchterms]');
+    }
+    
+    if ( empty($data) )
+        die('<reply> No results for "'.$USER['SEARCHQUERY'].'" in the index!');
+    
+    $keys = array_keys($data);
+    $row = array_shift($data);
+    $others = count($data);
+    $others_msg = ($others > 0) ? ', +'.$others.' other'.($others == 1 ? '' : 's').' @ http://mods.simplaza.net/?q='.urlencode($USER['SEARCHQUERY']) : '';
+    $output = QQ.'['.pick($row['version'],'???').'] '.$row['title'].QQ.' by '.$row['author'].', '.URL_TOPIC.$keys[0].' ( '.$row['views'].' views'.$others_msg.' )';
+        
+    echo '<reply> '.$output;
+    exit;
+}
+
 // ==============
 // EMAIL HANDLERS
 // ==============
