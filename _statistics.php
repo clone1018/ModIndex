@@ -30,8 +30,8 @@ $INDEX = index_require(FILE_INDEX);
 
 foreach ($INDEX as $key => $row) {
     // Process statistics only if the row has a valid version
-    if ($row['version'])
-        gather_statistics($row, $key, $ROW, $SUBINDEXES['metadata'][$key]);
+    //if ($row['version'])
+        //gather_statistics($row, $key, $ROW, $SUBINDEXES['metadata'][$key]);
     
     if ( (time() - $row['time_indexed']) > (60 * 60 * 24 * 30) ) {
         print_web('Expired entry removed: '.$row['title'].N);

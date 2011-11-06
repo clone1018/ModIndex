@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* 	============================================
 	THE MINECRAFT MOD INDEX
 	ADMIN PANEL
@@ -72,7 +72,7 @@ require_once('lib/_admin.func.php');
 	
 	<a href="./_scraper.php?admin=<?php echo $_GET['admin']?>" target="frame_core"><h2>1. Scrape</h2></a>
 	<a href="./_indexer.php?admin=<?php echo $_GET['admin']?>" target="frame_core"><h2>2. Index</h2></a>
-	<a href="./_janitor.php?admin=<?php echo $_GET['admin']?>" target="frame_core"><h2>3. Janitor</h2></a>
+	<a href="./_statistics.php?admin=<?php echo $_GET['admin']?>" target="frame_core"><h2>3. Janitor</h2></a>
 	
 	<?php
 	// _fixes.php is supposed to be a temporary file.

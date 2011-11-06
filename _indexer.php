@@ -118,9 +118,13 @@ function process_title(&$row, $id) {
 	
 	// Automatically flag SMP mods
 	if ( preg_match('@'.REGEX_OPENBRACKETS.'(smp(?: vanila)?)'.REGEX_CLOSEBRACKETS.'@i',$row['title'],$tag) ) {
-		$SUBINDEXES['metadata'][$id]['flag_smp'] = true;
-		$row['title'] = trim( str_ireplace($tag[0],'',$row['title']) );
-	}
+        $SUBINDEXES['metadata'][$id]['flag_smp'] = true;
+        $row['title'] = trim( str_ireplace($tag[0],'',$row['title']) );
+    }
+    
+    // Automatic flagging of SMP mods (more liberal)
+    if ( strpos($row['title'],'SMP') !== false )
+        $SUBINDEXES['metadata'][$id]['flag_smp'] = true;
 	
 	// Automatically flag Modloader mods
 	if ( preg_match('@'.REGEX_OPENBRACKETS.'(ml|modloader)'.REGEX_CLOSEBRACKETS.'@i',$row['title'],$tag) ) {
