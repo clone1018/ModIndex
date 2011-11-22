@@ -24,24 +24,24 @@ if (!file_exists(FILE_INDEX)) {
 // =========
 
 // ===== Filter states
-define(FILTER_ONLY, 1);
-define(FILTER_EXCLUDE, -1);
+define('FILTER_ONLY', 1);
+define('FILTER_EXCLUDE', -1);
 
 // ===== Sorting tweaks
-define(SORT_MAGIC_VIEWSTHRESHOLD, 200);
-define(SORT_MAGIC_VIEWSPROBABILITY, 200);
+define('SORT_MAGIC_VIEWSTHRESHOLD', 200);
+define('SORT_MAGIC_VIEWSPROBABILITY', 200);
 
 // ===== Index states
-define(STATE_NORMAL,   1);  // Normal listing mode
-define(STATE_SEARCHED, 2);  // Search results
-define(STATE_FILTERED, 4);  // Filtered results
-define(STATE_SORTED,   8);  // Manually sorted results
-define(STATE_LIMITED,  16); // Manually limited results
+define('STATE_NORMAL',   1);  // Normal listing mode
+define('STATE_SEARCHED', 2);  // Search results
+define('STATE_FILTERED', 4);  // Filtered results
+define('STATE_SORTED',   8);  // Manually sorted results
+define('STATE_LIMITED',  16); // Manually limited results
 
 // ===== Code generation types
-define(CODE_HTML, 0);
-define(CODE_BBCODE, 1);
-define(CODE_REDDIT, 2);
+define('CODE_HTML', 0);
+define('CODE_BBCODE', 1);
+define('CODE_REDDIT', 2);
 
 // =======
 // GLOBALS

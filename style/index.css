@@ -234,7 +234,7 @@ textarea {
 }
 
 #searchform {
-	float: right;
+    float: right;
 }
 
 	#searchform input {
@@ -249,6 +249,29 @@ textarea {
 		top: -100px;
 		left: 0px;
 	}
+    
+#searchform.active {
+    float: none;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    display: block;
+    width: 100%;
+}
+
+    #searchform.active input {
+        min-width: 800px;
+        max-width: 920px;
+        margin: 0 auto;
+        height: 50px;
+        font-size: x-large;
+        display: block;
+        width: 100%;
+    }
+    
+    #searchform.active #window_field_search {
+        border-radius: 0px 0px 20px 20px;
+    }
 	
 /* 	===========
 	ROW CLASSES

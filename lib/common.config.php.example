@@ -4,7 +4,7 @@
 	THE MINECRAFT MOD INDEX
 	COMMON LIBRARY USER CONFIGURATION
 
-	
+
 	by The Major / Crome Tysnomi / Ayman Habayeb
 	http://gnu32.deviantart.com
 	============================================
@@ -18,21 +18,21 @@ php_includeonly(__FILE__);
 
 /* This is an important component of the version regex that defines the current
  * version of Minecraft avaliable. It is your responsibility to keep this
- * updated, as this identifies all the up-to-date mods and acts as a filter for 
+ * updated, as this identifies all the up-to-date mods and acts as a filter for
  * functionality such as twitter and random mod picking.
- * 
+ *
  * This should be a regex that identifies not only the current stable version but
- * also all "pre-release" versions as well as all versions that are just as 
+ * also all "pre-release" versions as well as all versions that are just as
  * compatiable.
- * 
+ *
  * Note that you do not need to worry about different conventions of versioning,
  * such as "1.7.3" and "1.7_03" as the indexer automatically converts these.
- * 
+ *
  * If you don't understand regex, just update the numbers between the brackets and
  * hope for the best!
 */
 
-define(VERSION_MINECRAFT_CURRENT, '1\.(8|9)(\.[0-1])?(-pre5)?');
+define('VERSION_MINECRAFT_CURRENT', '1\.0\.0');
 
 // ============
 // INSTALLATION
@@ -41,39 +41,42 @@ define(VERSION_MINECRAFT_CURRENT, '1\.(8|9)(\.[0-1])?(-pre5)?');
 // 'Europe/London' (GMT with summer daylight savings) is highly reccomended.
 date_default_timezone_set('Europe/London');
 
+// Default language, using avaliable names from the /lang/ folder EXCEPT global
+define('LANG_DEFAULT', 'english');
+
 // The canonical URL to your mod index installation on the internet.
 // Keep it to hostname and directory only. No 'http://' and no slashes at the end.
 // e.g. 'mods.simplaza.net' or 'simplaza.net/mods'
-define(URL_INDEX_LIVEFIRE, 'www.example.com');
+define('URL_INDEX_LIVEFIRE', 'www.example.com');
 
 // The hostname + URL of your testing server, if you have one (which I highly reccommend).
 // This is used to automatically enable debugging features.
 // If you don't know, keep it 'localhost'
-define(HOSTNAME_TESTING, 'localhost');
-define(URL_INDEX_TESTING, HOSTNAME_TESTING.'/mods');
+define('HOSTNAME_TESTING', 'localhost');
+define('URL_INDEX_TESTING', HOSTNAME_TESTING.'/mods');
 
 // Email address of the administrator (for editor emails and alerts)
-define(EMAIL_ADMIN, 'webmaster@mods.com');
-define(EMAIL_NOTIFICATIONS, 'notifications@mods.com');
+define('EMAIL_ADMIN', 'webmaster@mods.com');
+define('EMAIL_NOTIFICATIONS', 'notifications@mods.com');
 
 // ========
 // SECURITY
 // ========
 
 // The password used to only allow cron scripts access the backend indexing engine (i.e. _scraper.php, _indexer.php, _janitor.php)
-define(AUTH_EXECUTION, '#####');
+define('AUTH_EXECUTION', '#####');
 
 // Your personal password for accessing admin scripts (e.g. _motw.php)
-define(AUTH_ADMIN, '#####');
+define('AUTH_ADMIN', '#####');
 
 // Password for indexmaster access to the admin panel (restricted to row editing and blacklisting)
-define(AUTH_INDEXMASTER, '#####');
+define('AUTH_INDEXMASTER', '#####');
 
 // Password for encrypting the email database (reccommended to generate a very strong, 16 character password with ASCII symbols)
-define(AUTH_EMAILDBKEY,'#####');
+define('AUTH_EMAILDBKEY','#####');
 
 // Password for encrypting individual database rows (reccommended to generate a very strong, 16 character password with ASCII symbols)
-define(AUTH_EMAILKEY,'#####');
+define('AUTH_EMAILKEY','#####');
 
 // =======
 // TWITTER
@@ -83,12 +86,12 @@ define(AUTH_EMAILKEY,'#####');
  * running.
  */
 
-define(LOGIN_TWITTER_USERNAME,'MCMods');
-define(LOGIN_TWITTER_PASSWORD,'#####');
+define('LOGIN_TWITTER_USERNAME','MCMods');
+define('LOGIN_TWITTER_PASSWORD','#####');
 
-define(LOGIN_TWITTER_CKEY,'#####');
-define(LOGIN_TWITTER_CSECRET,'#####');
-define(LOGIN_TWITTER_TOKEN,'#####-#####');
-define(LOGIN_TWITTER_TSECRET,'#####');
+define('LOGIN_TWITTER_CKEY','#####');
+define('LOGIN_TWITTER_CSECRET','#####');
+define('LOGIN_TWITTER_TOKEN','#####-#####');
+define('LOGIN_TWITTER_TSECRET','#####');
 
 ?>

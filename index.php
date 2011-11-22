@@ -249,33 +249,35 @@ require_once('lib/index.func.php');
 		<h6>A periodically updated index of mods avaliable on the <a href="http://www.minecraftforum.net/forum/51-released-mods/">Minecraft forums</a></h6>
 	</header>
 	
-	<form id="searchform" accept-charset="UTF-8">
-		<input id="field_search" name="mmiquery" placeholder="Search Index" value="<?php echo $USER['SEARCHQUERY']; ?>" />
+	<form id="searchform" class="active" accept-charset="UTF-8">
+        
+        <div class="window" id="window_field_search">
+            <h4>How to use filters:</h4>
+            <p>Simply use them alongside your search terms. Examples:</p>
+            <div class='center'><em><a href="?q=airship+!updated">airship !updated</a></em></div>
+            <div class='center'><em><a href="?q=!favorites+planes">!favorites planes</a></em></div>
+            
+            <hr />
+            <h4>Filters avaliable:</h4>
+            <ul>
+                <li><b>~adfly</b> - Hide Adf.ly-forced mods</li>
+                <li><b>!updated</b> - Show only updated mods</li>
+                <li><b>!favorites</b> - Show only favorited mods</li>
+                <li><b>.regex</b> - Parse search query as <a href="http://docs.google.com/viewer?url=http%3A%2F%2Fcdn.cloudfiles.mosso.com%2Fc8031%2FPHP_PCRE_Cheat_Sheet.pdf">PCRE Regex</a></li>
+            </ul>
+            <hr />
+            <h4>Accented and Unicode characters may break search.</h4>
+        </div>
 		<?php
 			ui_fieldpassthrough('sort', $_GET['sort']);
 			ui_fieldpassthrough('reverse', isset($_GET['reverse']));
 			ui_fieldpassthrough('limit', $_GET['limit']);
 		?>
+        
 		<input type="submit" value="GO" />
 	</form>
 	
-	<div class="tooltip hidden" id="tooltip_field_search">
-		<h4>How to use filters:</h4>
-		<p>Simply use them alongside your search terms. Examples:</p>
-		<div class='center'><em><a href="?q=airship+!updated">airship !updated</a></em></div>
-		<div class='center'><em><a href="?q=!favorites+planes">!favorites planes</a></em></div>
-		
-		<hr />
-		<h4>Filters avaliable:</h4>
-		<ul>
-			<li><b>~adfly</b> - Hide Adf.ly-forced mods</li>
-			<li><b>!updated</b> - Show only updated mods</li>
-			<li><b>!favorites</b> - Show only favorited mods</li>
-			<li><b>.regex</b> - Parse search query as <a href="http://docs.google.com/viewer?url=http%3A%2F%2Fcdn.cloudfiles.mosso.com%2Fc8031%2FPHP_PCRE_Cheat_Sheet.pdf">PCRE Regex</a></li>
-		</ul>
-		<hr />
-		<h4>Accented and Unicode characters may break search.</h4>
-	</div>
+	
 	
 	<div class="toolbar" id="toolbar_sort">
 	Sort by: <?php ui_list_sorts(); ?>
