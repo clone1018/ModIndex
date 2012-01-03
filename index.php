@@ -33,8 +33,23 @@ require_once('lib/index.func.php');
 </head>
 
 <body onload="init();">	
+
 <div id='root' class="root <?php echo ($SETTINGS['style']['hide_desc'] && $SETTINGS['style']['hide_flags']) ? 'listing_mini' : false; ?>">
 	<?php ui_dialog(); ?>
+	
+	<div class="windowroot">
+		<div class="window hidden" id="window_help">
+		
+			<div class="toolbar toolbar_window">
+				<a onclick="addClass(windowHelp, 'hidden'); return false;" class="button">Close</a>
+			</div> <h2>Help</h2>
+			
+			<div class="canvas">
+				<h3>ll<h3/>
+			</div>
+			
+		</div>
+	</div>
 	
 	<div class="windowroot">
 		<div class="window hidden" id="window_settings">
@@ -243,41 +258,56 @@ require_once('lib/index.func.php');
 		</div>
 	</div>
 	
+	<a style="
+		display: block;
+		width:400px;
+		height: 20px;
+		margin-top: -30px;
+		vertical-align:middle;
+		text-align:center;
+		background-color:#000;
+		position:relative;
+		top: 40px;
+		text-shadow: 0px 0px 5px;
+		color: #fff;" href="http://americancensorship.org">
+		<h3>STOP CENSORSHIP ></h3>
+	</a>
+		
 	<header>
-		<span class="toolbar right"><a onclick="settingsShow(); return false;">Settings</a></span>
+		
+		<span class="toolbar right"><a class='button hidden' onclick="helpShow(); return false;">Help</a></span>
+		<span class="toolbar right"><a class='button' onclick="settingsShow(); return false;">Settings</a></span>
 		<h1><a href="./">Minecraft Mod Index</a></h1>
 		<h6>A periodically updated index of mods avaliable on the <a href="http://www.minecraftforum.net/forum/51-released-mods/">Minecraft forums</a></h6>
 	</header>
 	
-	<form id="searchform" class="active" accept-charset="UTF-8">
-        
-        <div class="window" id="window_field_search">
-            <h4>How to use filters:</h4>
-            <p>Simply use them alongside your search terms. Examples:</p>
-            <div class='center'><em><a href="?q=airship+!updated">airship !updated</a></em></div>
-            <div class='center'><em><a href="?q=!favorites+planes">!favorites planes</a></em></div>
-            
-            <hr />
-            <h4>Filters avaliable:</h4>
-            <ul>
-                <li><b>~adfly</b> - Hide Adf.ly-forced mods</li>
-                <li><b>!updated</b> - Show only updated mods</li>
-                <li><b>!favorites</b> - Show only favorited mods</li>
-                <li><b>.regex</b> - Parse search query as <a href="http://docs.google.com/viewer?url=http%3A%2F%2Fcdn.cloudfiles.mosso.com%2Fc8031%2FPHP_PCRE_Cheat_Sheet.pdf">PCRE Regex</a></li>
-            </ul>
-            <hr />
-            <h4>Accented and Unicode characters may break search.</h4>
-        </div>
+	<form id="searchform" accept-charset="UTF-8">
+		<input id="field_search" name="mmiquery" placeholder="Search Index" value="<?php echo $USER['SEARCHQUERY']; ?>" />
 		<?php
 			ui_fieldpassthrough('sort', $_GET['sort']);
 			ui_fieldpassthrough('reverse', isset($_GET['reverse']));
 			ui_fieldpassthrough('limit', $_GET['limit']);
 		?>
-        
 		<input type="submit" value="GO" />
 	</form>
 	
-	
+	<div class="tooltip hidden" id="tooltip_field_search">
+		<h4>How to use filters:</h4>
+		<p>Simply use them alongside your search terms. Examples:</p>
+		<div class='center'><em><a href="?q=airship+!updated">airship !updated</a></em></div>
+		<div class='center'><em><a href="?q=!favorites+planes">!favorites planes</a></em></div>
+		
+		<hr />
+		<h4>Filters avaliable:</h4>
+		<ul>
+			<li><b>~adfly</b> - Hide Adf.ly-forced mods</li>
+			<li><b>!updated</b> - Show only updated mods</li>
+			<li><b>!favorites</b> - Show only favorited mods</li>
+			<li><b>.regex</b> - Parse search query as <a href="http://docs.google.com/viewer?url=http%3A%2F%2Fcdn.cloudfiles.mosso.com%2Fc8031%2FPHP_PCRE_Cheat_Sheet.pdf">PCRE Regex</a></li>
+		</ul>
+		<hr />
+		<h4>Accented and Unicode characters may break search.</h4>
+	</div>
 	
 	<div class="toolbar" id="toolbar_sort">
 	Sort by: <?php ui_list_sorts(); ?>
@@ -289,6 +319,16 @@ require_once('lib/index.func.php');
 ?>
 	
 </div>
+
+<div style="position: fixed; bottom: 0px; width: 100%;">
+<div style="margin: 0 auto; min-width: 800px; max-width: 920px;
+background: #051525; border-top: 1px solid #152546;
+text-align: center; font-size: 12px; font-weight: bold; padding: 5px 0px; color: #fff;">
+Follow <a href="http://twitter.com/MCMods" style="color: #aaf">@MCMods</a> on Twitter for a live, automatic feed of 1.0.0 mods as they appear!
+<div/>
+<div/>
+
+
 	<!-- darioissocoollike -->
 </body>
 </html>

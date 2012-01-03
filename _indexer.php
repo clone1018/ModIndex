@@ -10,8 +10,7 @@
 */
 
 require_once('lib/common.php');
-require_once('lib/email.php');
-
+require_once('lib/system.email.php');
 header('Content-type: text/plain;');
 auth_access($argv);
 
